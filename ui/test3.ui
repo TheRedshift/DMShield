@@ -21,11 +21,11 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="Buttons">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>Buttons</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -55,23 +55,109 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="Initiative">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Initiative</string>
        </attribute>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>240</y>
-          <width>47</width>
-          <height>13</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Tab 2</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPushButton" name="sortButton">
+          <property name="text">
+           <string>Sort</string>
+          </property>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignTop">
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="minimumSize">
+           <size>
+            <width>758</width>
+            <height>192</height>
+           </size>
+          </property>
+          <row>
+           <property name="text">
+            <string>Ghurrix</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Valmet</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Filip</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Initiative</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>AC</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>HP</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Notes</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>20</string>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>12</string>
+           </property>
+          </item>
+          <item row="0" column="2">
+           <property name="text">
+            <string>100</string>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>15</string>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>17</string>
+           </property>
+          </item>
+          <item row="1" column="2">
+           <property name="text">
+            <string>150</string>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>10</string>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>16</string>
+           </property>
+          </item>
+          <item row="2" column="2">
+           <property name="text">
+            <string>200</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
