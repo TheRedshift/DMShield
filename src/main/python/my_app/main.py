@@ -1,13 +1,20 @@
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5 import uic
-
+from PyQt5 import QtWidgets, uic
 import sys
 
-if __name__ == '__main__':
-    appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
-    #window = QMainWindow()
-    window = uic.loadUi("ui\\test3.ui")
-    window.show()
-    exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
-    sys.exit(exit_code)
+class Ui(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Ui, self).__init__()
+        uic.loadUi("ui\\test3.ui", self)
+
+        self.button = self.findChild(QtWidgets.QPushButton, 'pushButton') # Find the button
+        self.button.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
+
+        self.show()
+
+    def printButtonPressed(self):
+        # This is executed when the button is pressed
+        print('printButtonPressed')
+
+app = QtWidgets.QApplication(sys.argv)
+window = Ui()
+app.exec_()
