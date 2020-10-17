@@ -4,9 +4,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
 
 
-qt_creator_file = "mainwindow.ui"
+qt_creator_file = "src\\tutorials\\mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
-tick = QtGui.QImage('tick.png')
+tick = QtGui.QImage('src\\tutorials\\tick.png')
 
 
 class TodoModel(QtCore.QAbstractListModel):
@@ -83,13 +83,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def load(self):
         try:
-            with open('data.db', 'r') as f:
+            with open('src\\tutorials\\data.db', 'r') as f:
                 self.model.todos = json.load(f)
         except Exception:
             pass
 
     def save(self):
-        with open('data.db', 'w') as f:
+        with open('src\\tutorials\\data.db', 'w') as f:
             data = json.dump(self.model.todos, f)
 
 
