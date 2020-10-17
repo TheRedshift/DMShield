@@ -6,8 +6,10 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi("ui\\test3.ui", self)
 
-        self.button = self.findChild(QtWidgets.QPushButton, 'pushButton') # Find the button
-        self.button.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
+        #self.button = self.findChild(QtWidgets.QPushButton, 'pushButton') # Find the button
+        #self.button.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
+
+        self.pushButton.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
 
         self.show()
 
