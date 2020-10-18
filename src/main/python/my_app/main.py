@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from MainWindow import Ui_MainWindow
+from PyQt5.QtWidgets import QMessageBox
 
 
 
@@ -92,6 +93,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.delegate = MyDelegate()
         self.tableView.setItemDelegate(self.delegate)
         self.addButton.pressed.connect(self.add)
+        self.saveButton.pressed.connect(self.save)
         self.deleteSelected.pressed.connect(self.delete)
         #self.deleteButton.pressed.connect(self.delete)
         #self.completeButton.pressed.connect(self.complete)
@@ -105,13 +107,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         text = self.todoEdit.text()
         if text: # Don't add empty strings.
             # Access the list via the model.
-            self.model._data.append(text.split(","))
-            # Trigger refresh.        
-            self.model.layoutChanged.emit()
-            # Empty the input
-            self.todoEdit.setText("")
-            self.save()          
-    
+            temp = text.split(",")
+
+            if len(temp) == 4:
+
+                self.model._data.append(text.split(","))
+                # Trigger refresh.        
+                self.model.layoutChanged.emit()
+                # Empty the input
+                self.todoEdit.setText("")
+                self.save()          
+            else:
+                QMessageBox.about(self, "Dumb Dumb", "Enter 4 values separate by commas, e.g. Ghurrix,12,14,90")
+        
     def delete(self):
         indexes = self.tableView.selectedIndexes()
         if indexes:

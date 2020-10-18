@@ -37,6 +37,9 @@ class Ui_MainWindow(object):
         self.deleteSelected = QtWidgets.QPushButton(self.centralwidget)
         self.deleteSelected.setObjectName("deleteSelected")
         self.verticalLayout.addWidget(self.deleteSelected)
+        self.saveButton = QtWidgets.QPushButton(self.centralwidget)
+        self.saveButton.setObjectName("saveButton")
+        self.verticalLayout.addWidget(self.saveButton)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
@@ -54,4 +57,5 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Todo"))
         self.addButton.setText(_translate("MainWindow", "Add to Initiative"))
         self.deleteSelected.setText(_translate("MainWindow", "Delete Selected"))
+        self.saveButton.setText(_translate("MainWindow", "Save"))
 
