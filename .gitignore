@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#VS code folder to satisfy David
+/.vscode
+/.vscode/
+.vscode/
+
