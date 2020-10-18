@@ -12,6 +12,12 @@ class TodoModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
         super(TodoModel, self).__init__()
         self._data = data
+        self.header_labels = ['Name', 'Initiative', 'AC', 'HP']
+
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+            return self.header_labels[section]
+        return QtCore.QAbstractTableModel.headerData(self, section, orientation, role)
         
     def data(self, index, role):
         if role == Qt.DisplayRole:
@@ -32,11 +38,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #QtWidgets.QMainWindow.__init__(self)
         #Ui_MainWindow.__init__(self)
         data = [
-          [4, 9, 2],
-          [1, 0, 0],
-          [3, 5, 0],
-          [3, 3, 2],
-          [7, 8, 9],
+          ["Ghurrix", 9, 1, 6],
+          ["Valmet", 20,19,143],
         ]
         self.model = TodoModel(data)
         #self.load()
