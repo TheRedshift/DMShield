@@ -54,8 +54,8 @@ class TodoModel(QtCore.QAbstractTableModel):
 
         self.layoutChanged.emit()
 
-    #def flags(self, index):
-     #   return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+    def flags(self, index):
+        return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 
 class MyDelegate(QtWidgets.QItemDelegate):
 
@@ -68,9 +68,7 @@ class MyDelegate(QtWidgets.QItemDelegate):
         editor.setText(str(text))    
 
     def setModelData(self, editor, model, index):
-        self.layoutAboutToBeChanged.emit()
         model.setData(index, editor.text())
-        self.layoutChanged.emit()
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -120,7 +118,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             index = indexes[0]
             # Remove the item and refresh.
             del self.model._data[index.row()]
-            self.tableView.layoutChanged.emit()
+            #self.tableView.layoutChanged.emit()
             self.model.layoutChanged.emit()
             # Clear the selection (as it is no longer valid).
             self.tableView.clearSelection()
