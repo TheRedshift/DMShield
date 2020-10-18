@@ -32,6 +32,7 @@ class TodoModel(QtCore.QAbstractTableModel):
         # the length (only works if all rows are an equal length)
         return len(self._data[0])
 
+
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -42,9 +43,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
           ["Valmet", 20,19,143],
         ]
         self.model = TodoModel(data)
+        self.proxyModel = QtCore.QSortFilterProxyModel()
+        self.proxyModel.setSourceModel(self.model)
+        #tableView.setModel(proxyModel)
+        #tableView.setSortingEnabled(True)
         #self.load()
         self.setupUi(self)
-        self.tableView.setModel(self.model)
+        self.tableView.setModel(self.proxyModel)
         self.addButton.pressed.connect(self.add)
         #self.deleteButton.pressed.connect(self.delete)
         #self.completeButton.pressed.connect(self.complete)
@@ -58,7 +63,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         text = self.todoEdit.text()
         if text: # Don't add empty strings.
             # Access the list via the model.
-            self.model._data.append((False, text))
+            self.model._data.append(text.split(","))
             # Trigger refresh.        
             self.model.layoutChanged.emit()
             # Empty the input
