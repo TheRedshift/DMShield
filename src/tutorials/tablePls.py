@@ -38,7 +38,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableView.setModel(self.model)
         self.addButton.pressed.connect(self.add)
         #self.deleteButton.pressed.connect(self.delete)
-        #self.completeButton.pressed.connect(self.complete)
+        self.completeButton.pressed.connect(self.complete)
 
     def add(self):
         """

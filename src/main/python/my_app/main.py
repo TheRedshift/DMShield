@@ -1,18 +1,70 @@
-from PyQt5 import QtWidgets, uic
 import sys
+import json
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import Qt
 
-class TableModel(QtCore.QAbstractTableModel):
+
+qt_creator_file = "src\\tutorials\\mainwindowTable.ui"
+Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
+
+
+class TodoModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
-        super(TableModel, self).__init__()
-        self._data = data
-
+        super(TodoModel, self).__init__()
+        self._data = data or []
+        
     def data(self, index, role):
         if role == Qt.DisplayRole:
-            # See below for the nested-list data structure.
-            # .row() indexes into the outer list,
-            # .column() indexes into the sub-list
             return self._data[index.row()][index.column()]
 
+    def rowCount(self, index):
+        return len(self._data)
+
+
+    def columnCount(self, index):
+        # The following takes the first sub-list, and returns
+        # the length (only works if all rows are an equal length)
+        return len(self._data[0])
+
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        QtWidgets.QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
+        self.setupUi(self)
+        self.model = TodoModel([[1,2,3],["a","b","c"]])
+        #self.load()
+        self.tableView.setModel(self.model)
+        self.addButton.pressed.connect(self.add)
+        #self.deleteButton.pressed.connect(self.delete)
+        #self.completeButton.pressed.connect(self.complete)
+
+    def add(self):
+        """
+        Add an item to our todo list, getting the text from the QLineEdit .todoEdit
+        and then clearing it.
+        """
+        text = self.todoEdit.text()
+        if text: # Don't add empty strings.
+            # Access the list via the model.
+            self.model._data.append((False, text))
+            # Trigger refresh.        
+            self.model.layoutChanged.emit()
+            # Empty the input
+            self.todoEdit.setText("")
+            self.save()          
+    
+    def load(self):
+        try:
+            with open('src\\tutorials\\data.db', 'r') as f:
+                self.model._data = json.load(f)
+        except Exception:
+            pass
+
+    def save(self):
+        with open('src\\tutorials\\data.db', 'w') as f:
+            data = json.dump(self.model._data, f)
+
+    
     def rowCount(self, index):
         # The length of the outer list.
         return len(self._data)
@@ -22,24 +74,10 @@ class TableModel(QtCore.QAbstractTableModel):
         # the length (only works if all rows are an equal length)
         return len(self._data[0])
 
-class Ui(QtWidgets.QMainWindow):
-    def __init__(self):
-        super(Ui, self).__init__()
-        uic.loadUi("ui\\test3.ui", self)
-
-        #self.button = self.findChild(QtWidgets.QPushButton, 'pushButton') # Find the button
-        #self.button.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
-
-        self.pushButton.clicked.connect(self.printButtonPressed) # Remember to pass the definition/method, not the return value!
-
-        self.show()
-
-    def printButtonPressed(self):
-        # This is executed when the button is pressed
-        print('printButtonPressed')
-
-
 
 app = QtWidgets.QApplication(sys.argv)
-window = Ui()
+window = MainWindow()
+window.show()
 app.exec_()
+
+
