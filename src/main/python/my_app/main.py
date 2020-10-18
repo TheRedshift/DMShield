@@ -7,8 +7,8 @@ from PyQt5.QtCore import Qt
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 
-path = Path(__file__).parent / 'mainWindowTable.ui'
-qt_creator_file = path 
+#path = Path(__file__).parent / 'mainWindowTable.ui'
+qt_creator_file = "src\\main\\resources\\mainWindowTable.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 
 class TodoModel(QtCore.QAbstractTableModel):
@@ -128,13 +128,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def load(self):
         try:
-            with open('src\\tutorials\\data.db', 'r') as f:
+            with open('src\\main\\resources\\base\\data.db', 'r') as f:
                 self.model._data = json.load(f)
         except Exception:
             pass
 
     def save(self):
-        with open('src\\tutorials\\data.db', 'w') as f:
+        with open('src\\main\\resources\\base\\data.db', 'w') as f:
             data = json.dump(self.model._data, f)
 
     
@@ -149,7 +149,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
-
+    qt_creator_file = "src\\main\\resources\\mainWindowTable.ui"
+    Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
