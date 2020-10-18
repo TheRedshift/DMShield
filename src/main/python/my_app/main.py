@@ -23,7 +23,7 @@ class TodoModel(QtCore.QAbstractTableModel):
     def data(self, index, role):
         if role == Qt.DisplayRole:
             if index.column() != 0:
-                return self._data[index.row()][int(index.column())]
+                return int(self._data[index.row()][index.column()])
             else:   
                 return self._data[index.row()][index.column()]
 
@@ -34,7 +34,10 @@ class TodoModel(QtCore.QAbstractTableModel):
     def columnCount(self, index):
         # The following takes the first sub-list, and returns
         # the length (only works if all rows are an equal length)
-        return len(self._data[0])
+        if len(self._data) > 0:
+            return len(self._data[0])
+        else:
+            return 0
 
     def setData(self, index, value, role):
         if value != "":
