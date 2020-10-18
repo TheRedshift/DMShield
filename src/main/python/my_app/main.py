@@ -39,15 +39,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #QtWidgets.QMainWindow.__init__(self)
         #Ui_MainWindow.__init__(self)
         data = [
-          ["Ghurrix", 9, 1, 6],
-          ["Valmet", 20,19,143],
+          ["Name here", 1, 2, 3],
         ]
         self.model = TodoModel(data)
         self.proxyModel = QtCore.QSortFilterProxyModel()
         self.proxyModel.setSourceModel(self.model)
         #tableView.setModel(proxyModel)
         #tableView.setSortingEnabled(True)
-        #self.load()
+        self.load()
         self.setupUi(self)
         self.tableView.setModel(self.proxyModel)
         self.addButton.pressed.connect(self.add)
