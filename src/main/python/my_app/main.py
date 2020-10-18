@@ -49,12 +49,13 @@ class TodoModel(QtCore.QAbstractTableModel):
     def sort(self, Ncol, order):
         """Sort table by given column number."""
         self.layoutAboutToBeChanged.emit()
-        if order == QtCore.Qt.AscendingOrder:
-            self._data = sorted(self._data, key=lambda x: int(x[Ncol]))
-        else:
-            self._data = sorted(self._data, reverse=True, key=lambda x: int(x[Ncol]))
+        if Ncol != 0:
+            if order == QtCore.Qt.AscendingOrder:
+                self._data = sorted(self._data, key=lambda x: int(x[Ncol]))
+            else:
+                self._data = sorted(self._data, reverse=True, key=lambda x: int(x[Ncol]))
 
-        self.layoutChanged.emit()
+            self.layoutChanged.emit()
 
     def flags(self, index):
         return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
