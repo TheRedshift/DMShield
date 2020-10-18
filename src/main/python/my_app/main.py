@@ -22,7 +22,10 @@ class TodoModel(QtCore.QAbstractTableModel):
         
     def data(self, index, role):
         if role == Qt.DisplayRole:
-            return self._data[index.row()][index.column()]
+            if index.column() != 0:
+                return self._data[index.row()][int(index.column())]
+            else:   
+                return self._data[index.row()][index.column()]
 
     def rowCount(self, index):
         return len(self._data)
@@ -32,6 +35,27 @@ class TodoModel(QtCore.QAbstractTableModel):
         # The following takes the first sub-list, and returns
         # the length (only works if all rows are an equal length)
         return len(self._data[0])
+
+    def setData(self, index, value, role):
+        if value != "":
+            self._data[index.row()][index.column()] = value
+        return True
+
+    def flags(self, index):
+        return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+
+class MyDelegate(QtWidgets.QItemDelegate):
+
+    def createEditor(self, parent, option, index):
+        return super(MyDelegate, self).createEditor(parent, option, index)
+
+    def setEditorData(self, editor, index):
+        # Gets display text if edit data hasn't been set.
+        text = index.data(Qt.EditRole) or index.data(Qt.DisplayRole)
+        editor.setText(str(text))    
+
+    def setModelData(self, editor, model, index):
+        model.setData(index, editor.text())
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -50,6 +74,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.load()
         self.setupUi(self)
         self.tableView.setModel(self.proxyModel)
+        self.delegate = MyDelegate()
+        self.tableView.setItemDelegate(self.delegate)
         self.addButton.pressed.connect(self.add)
         self.deleteSelected.pressed.connect(self.delete)
         #self.deleteButton.pressed.connect(self.delete)
