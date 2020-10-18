@@ -5,6 +5,7 @@ import json
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
+from MainWindow import Ui_MainWindow
 
 
 
