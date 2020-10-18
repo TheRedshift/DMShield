@@ -39,13 +39,23 @@ class TodoModel(QtCore.QAbstractTableModel):
         else:
             return 0
 
-    def setData(self, index, value, role):
+    def setData(self, index, value):
         if value != "":
             self._data[index.row()][index.column()] = value
         return True
 
-    def flags(self, index):
-        return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+    def sort(self, Ncol, order):
+        """Sort table by given column number."""
+        self.layoutAboutToBeChanged.emit()
+        if order == QtCore.Qt.AscendingOrder:
+            self._data = sorted(self._data, key=lambda x: int(x[Ncol]))
+        else:
+            self._data = sorted(self._data, reverse=True, key=lambda x: int(x[Ncol]))
+
+        self.layoutChanged.emit()
+
+    #def flags(self, index):
+     #   return QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 
 class MyDelegate(QtWidgets.QItemDelegate):
 
@@ -58,7 +68,9 @@ class MyDelegate(QtWidgets.QItemDelegate):
         editor.setText(str(text))    
 
     def setModelData(self, editor, model, index):
+        self.layoutAboutToBeChanged.emit()
         model.setData(index, editor.text())
+        self.layoutChanged.emit()
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -76,7 +88,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         #tableView.setSortingEnabled(True)
         self.load()
         self.setupUi(self)
-        self.tableView.setModel(self.proxyModel)
+        #self.tableView.setModel(self.proxyModel)
+        self.tableView.setModel(self.model)
         self.delegate = MyDelegate()
         self.tableView.setItemDelegate(self.delegate)
         self.addButton.pressed.connect(self.add)
@@ -107,6 +120,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             index = indexes[0]
             # Remove the item and refresh.
             del self.model._data[index.row()]
+            self.tableView.layoutChanged.emit()
             self.model.layoutChanged.emit()
             # Clear the selection (as it is no longer valid).
             self.tableView.clearSelection()
