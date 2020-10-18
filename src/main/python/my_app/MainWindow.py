@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Todo"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Initiative Tracker"))
         self.addButton.setText(_translate("MainWindow", "Add to Initiative"))
         self.deleteSelected.setText(_translate("MainWindow", "Delete Selected"))
         self.saveButton.setText(_translate("MainWindow", "Save"))
