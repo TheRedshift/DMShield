@@ -44,6 +44,7 @@ class TodoModel(QtCore.QAbstractTableModel):
             self._data[index.row()][index.column()] = value
         return True
 
+
     def sort(self, Ncol, order):
         """Sort table by given column number."""
         self.layoutAboutToBeChanged.emit()
@@ -126,14 +127,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def load(self):
         try:
-            with open('src\\main\\resources\\base\\data.db', 'r') as f:
+            with open(appctxt.get_resource('data.db'), 'r') as f:
                 self.model._data = json.load(f)
         except Exception:
             pass
 
     def save(self):
-        with open('src\\main\\resources\\base\\data.db', 'w') as f:
-            data = json.dump(self.model._data, f)
+            with open(appctxt.get_resource('data.db'), 'w') as f:
+                data = json.dump(self.model._data, f)
 
     
     def rowCount(self, index):
