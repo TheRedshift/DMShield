@@ -129,7 +129,5 @@ dmypy.json
 .pyre/
 
 #VS code folder to satisfy David
-/.vscode
-/.vscode/
-.vscode/
+**/.vscode/
 
