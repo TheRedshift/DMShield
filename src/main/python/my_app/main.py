@@ -1,13 +1,15 @@
 import sys
+import os
+from pathlib import Path
 import json
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 
-qt_creator_file = "src\\tutorials\\mainwindowTable.ui"
+path = Path(__file__).parent / 'mainWindowTable.ui'
+qt_creator_file = path 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
-
 
 class TodoModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
@@ -145,13 +147,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # the length (only works if all rows are an equal length)
         return len(self._data[0])
 
+if __name__ == '__main__':
+    appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
 
-appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
-app = QtWidgets.QApplication(sys.argv)
-window = MainWindow()
-window.show()
-exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
-sys.exit(exit_code)
-app.exec_()
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
+    sys.exit(exit_code)
 
 
