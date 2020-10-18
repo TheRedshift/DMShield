@@ -7,9 +7,6 @@ from PyQt5.QtCore import Qt
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 
-#path = Path(__file__).parent / 'mainWindowTable.ui'
-qt_creator_file = "src\\main\\resources\\mainWindowTable.ui"
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 
 class TodoModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
@@ -74,10 +71,10 @@ class MyDelegate(QtWidgets.QItemDelegate):
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self, parent=None):
         super().__init__()
-        #QtWidgets.QMainWindow.__init__(self)
-        #Ui_MainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
         data = [
           ["Name here", 1, 2, 3],
         ]
@@ -149,7 +146,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
-    qt_creator_file = "src\\main\\resources\\mainWindowTable.ui"
+    qtUIFile = appctxt.get_resource('mainWindowTable.ui')
+    qt_creator_file = qtUIFile
+    #path = Path(__file__).parent / 'mainWindowTable.ui'
+    #qt_creator_file = "src\\main\\resources\\mainWindowTable.ui"
+    #Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
     Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
