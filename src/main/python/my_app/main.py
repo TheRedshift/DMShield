@@ -2,6 +2,7 @@ import sys
 import json
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 
 qt_creator_file = "src\\tutorials\\mainwindowTable.ui"
@@ -50,6 +51,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.tableView.setModel(self.proxyModel)
         self.addButton.pressed.connect(self.add)
+        self.deleteSelected.pressed.connect(self.delete)
         #self.deleteButton.pressed.connect(self.delete)
         #self.completeButton.pressed.connect(self.complete)
         
@@ -69,6 +71,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.todoEdit.setText("")
             self.save()          
     
+    def delete(self):
+        indexes = self.tableView.selectedIndexes()
+        if indexes:
+            # Indexes is a list of a single item in single-select mode.
+            index = indexes[0]
+            # Remove the item and refresh.
+            del self.model._data[index.row()]
+            self.model.layoutChanged.emit()
+            # Clear the selection (as it is no longer valid).
+            self.tableView.clearSelection()
+            self.save()
+
     def load(self):
         try:
             with open('src\\tutorials\\data.db', 'r') as f:
@@ -91,9 +105,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return len(self._data[0])
 
 
+appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()
 window.show()
+exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
+sys.exit(exit_code)
 app.exec_()
 
 
