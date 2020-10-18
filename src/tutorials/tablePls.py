@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
 
 
-qt_creator_file = "src\\tutorials\\mainwindow.ui"
+qt_creator_file = "src\\tutorials\\mainwindowTable.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 tick = QtGui.QImage('src\\tutorials\\tick.png')
 
@@ -35,10 +35,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.model = TodoModel()
         self.load()
-        self.todoView.setModel(self.model)
+        self.tableView.setModel(self.model)
         self.addButton.pressed.connect(self.add)
-        self.deleteButton.pressed.connect(self.delete)
-        self.completeButton.pressed.connect(self.complete)
+        #self.deleteButton.pressed.connect(self.delete)
+        #self.completeButton.pressed.connect(self.complete)
 
     def add(self):
         """
