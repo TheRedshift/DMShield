@@ -11,7 +11,7 @@ Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
 class TodoModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
         super(TodoModel, self).__init__()
-        self._data = data or []
+        self._data = data
         
     def data(self, index, role):
         if role == Qt.DisplayRole:
@@ -28,15 +28,24 @@ class TodoModel(QtCore.QAbstractTableModel):
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        QtWidgets.QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
-        self.setupUi(self)
-        self.model = TodoModel([[1,2,3],["a","b","c"]])
+        super().__init__()
+        #QtWidgets.QMainWindow.__init__(self)
+        #Ui_MainWindow.__init__(self)
+        data = [
+          [4, 9, 2],
+          [1, 0, 0],
+          [3, 5, 0],
+          [3, 3, 2],
+          [7, 8, 9],
+        ]
+        self.model = TodoModel(data)
         #self.load()
+        self.setupUi(self)
         self.tableView.setModel(self.model)
         self.addButton.pressed.connect(self.add)
         #self.deleteButton.pressed.connect(self.delete)
         #self.completeButton.pressed.connect(self.complete)
+        
 
     def add(self):
         """

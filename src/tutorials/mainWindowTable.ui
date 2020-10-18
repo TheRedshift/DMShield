@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>275</width>
-    <height>314</height>
+    <height>312</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,15 +16,12 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QListView" name="tableView">
-      <property name="selectionMode">
-       <enum>QAbstractItemView::SingleSelection</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QWidget" name="widget" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout"/>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QTableView" name="tableView"/>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
