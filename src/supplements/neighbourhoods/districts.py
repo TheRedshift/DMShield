@@ -1,12 +1,34 @@
-import networkx as nx
 import matplotlib.pyplot as plt
+import networkx as nx
 
-G = nx.petersen_graph()
-plt.subplot(121)
+G = nx.random_geometric_graph(100, 0.2)
+# position is stored as node attribute data for random_geometric_graph
+pos = nx.get_node_attributes(G, "pos")
 
-nx.draw(G, with_labels=True, font_weight='bold')
-plt.subplot(122)
+# find node near center (0.5,0.5)
+dmin = 1
+ncenter = 0
+for n in pos:
+    x, y = pos[n]
+    d = (x - 0.5) ** 2 + (y - 0.5) ** 2
+    if d < dmin:
+        ncenter = n
+        dmin = d
 
-nx.draw_shell(G, nlist=[range(5, 10), range(5)], with_labels=True, font_weight='bold')
+# color by path length from node near center
+p = dict(nx.single_source_shortest_path_length(G, ncenter))
 
+plt.figure(figsize=(8, 8))
+nx.draw_networkx_edges(G, pos, nodelist=[ncenter], alpha=0.4)
+nx.draw_networkx_nodes(
+    G,
+    pos,
+    nodelist=list(p.keys()),
+    node_size=80,
+    cmap=plt.cm.Reds_r,
+)
+
+plt.xlim(-0.05, 1.05)
+plt.ylim(-0.05, 1.05)
+plt.axis("off")
 plt.show()
