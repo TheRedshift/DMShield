@@ -14,7 +14,7 @@ import numpy as np
 n = 20
 pos = {i: (random.gauss(0, 2), random.gauss(0, 2)) for i in range(n)}
 #G = nx.random_geometric_graph(n, 0.2)
-G = nx.gaussian_random_partition_graph(50, 10, 10, 0.25, 0.01)
+G = nx.random_partition_graph([5,5,5,5], 0.5, 0.05)
 #for y in G:
 #    G.nodes[y]['viz'] = {"position": {"x": G.nodes[y]['pos'][0], "y": G.nodes[y]['pos'][1], "z": 0.0}}
 #    del (G.nodes[y]['pos'])
@@ -24,11 +24,10 @@ G.remove_nodes_from(list(nx.isolates(G)))
 #for x in A:
 #    print(str(x)+':'+str(A[x]))
 
-for y in G:
-    if y % 2 == 0:
-        G.nodes[y]['neighbourhood'] = '1'
-    else:
-        G.nodes[y]['neighbourhood'] = '2'
+print(G.graph["partition"])
+print(G.graph["partition"][0])
+
+
 
 #print(list(G.nodes))
 
