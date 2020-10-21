@@ -11,26 +11,23 @@ import numpy as np
 #G = nx.from_dict_of_lists(A)
 
 
-n = 20
-pos = {i: (random.gauss(0, 2), random.gauss(0, 2)) for i in range(n)}
 #G = nx.random_geometric_graph(n, 0.2)
-G = nx.gaussian_random_partition_graph(30, 5, 2, 0.5, 0.03)
+G = nx.cycle_graph(5)
 #for y in G:
 #    G.nodes[y]['viz'] = {"position": {"x": G.nodes[y]['pos'][0], "y": G.nodes[y]['pos'][1], "z": 0.0}}
 #    del (G.nodes[y]['pos'])
 
-G.remove_nodes_from(list(nx.isolates(G)))
+#G.remove_nodes_from(list(nx.isolates(G)))
 
 #for x in A:
 #    print(str(x)+':'+str(A[x]))
 
-print(G.graph["partition"])
-print(G.graph["partition"][0])
-
+#print(G.graph["partition"])
+#print(G.graph["partition"][0])
 
 
 #print(list(G.nodes))
 
-nx.write_gexf(G, "generatorTest.gexf")
+nx.write_gexf(G, "superTest.gexf")
 
 #print(nx.adjacency_matrix(G))
