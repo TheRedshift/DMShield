@@ -1,34 +1,25 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+import random
+import scipy
+import numpy as np
 
-G = nx.random_geometric_graph(100, 0.2)
-# position is stored as node attribute data for random_geometric_graph
-pos = nx.get_node_attributes(G, "pos")
+#G = nx.random_geometric_graph(5, 0.2)
 
-# find node near center (0.5,0.5)
-dmin = 1
-ncenter = 0
-for n in pos:
-    x, y = pos[n]
-    d = (x - 0.5) ** 2 + (y - 0.5) ** 2
-    if d < dmin:
-        ncenter = n
-        dmin = d
+G = nx.connected_caveman_graph(10, 3)
 
-# color by path length from node near center
-p = dict(nx.single_source_shortest_path_length(G, ncenter))
+print(list(G.nodes))
 
-plt.figure(figsize=(8, 8))
-nx.draw_networkx_edges(G, pos, nodelist=[ncenter], alpha=0.4)
-nx.draw_networkx_nodes(
-    G,
-    pos,
-    nodelist=list(p.keys()),
-    node_size=80,
-    cmap=plt.cm.Reds_r,
-)
+for x in range(0,10):
+    t = x * 3
+    for y in range(0,3):
+        G.nodes[t+y]["neighbourhood"] = x
 
-plt.xlim(-0.05, 1.05)
-plt.ylim(-0.05, 1.05)
-plt.axis("off")
-plt.show()
+nx.write_gml(G, "test.gml")
+
+print(nx.adjacency_matrix(G))
+
+temp = (nx.to_numpy_array(G))
+
+for x in temp:
+    print (x)
